@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+
+
+<div class="text-center">
+    <div class="container" style="width:100%; background-image:url('@Url.Content("~/Images/library2_menu.png")')" >
+        <div class="row">
+            <div class="col" style="padding-top:400px; padding-bottom:130px">
+
+                <form asp-controller="BookList" asp-action="FindBook" autocomplete="off">
+                    <h5>Wyszukaj książkę</h5>
+
+                    <p>
+                        Tytuł  <input type="text" name="titlebook" /> <input type="submit" value="Wyszukaj" />
+                    </p>
+
+                    <p>
+
+                    </p>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+

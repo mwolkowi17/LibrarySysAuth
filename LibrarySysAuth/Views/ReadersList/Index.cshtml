@@ -1,0 +1,65 @@
+﻿@model LibrarySysAuth.Models.LibraryViewModel
+
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Readers</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Readers[0].ReaderID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Readers[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Readers[0].Surname)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Readers)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReaderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                <a asp-action="Select" asp-route-id="@item.ReaderID">Wyświetl wypożyczone</a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.ReaderID">Usuń</a>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+<hr />
+<div class="Addbook" style="margin-top:70px">
+    <form asp-controller="ReadersList" asp-action="AddUser" autocomplete="off">
+        <h5>Dodaj czytelnika</h5>
+
+        <p>
+            Imię  <input type="text" name="nameuser" />
+        </p>
+        <p>
+            Nazwisko <input type="text" name="surnameuser" />
+        </p>
+        <p>
+            <input type="submit" value="Wprowadź" />
+        </p>
+    </form>
+</div>

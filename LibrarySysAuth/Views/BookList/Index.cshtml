@@ -1,0 +1,99 @@
+﻿@model LibrarySysAuth.Models.LibraryViewModel
+   
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <h1>Books</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nr kat
+                    <!-- @Html.DisplayNameFor(model => model.BookCs[0].BookCID)-->
+                </th>
+                <th>
+                    Tytuł
+                    <!-- @Html.DisplayNameFor(model => model.BookCs[0].TitleC)-->
+                </th>
+                <th>
+                    Autor
+                    <!-- @Html.DisplayNameFor(model => model.BookCs[0].AuthorC)-->
+                </th>
+                <th>
+                    Status wypożyczenia
+                </th>
+                <th>
+                    Wypożyczający
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.BookCs)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookCID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TitleC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rented)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RentedbyReader)
+                </td>
+                <td>
+                    <a asp-action="DropOff" asp-route-id="@item.BookCID">Zwróć</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.BookCID">Usuń</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+<hr />
+<div class="container">
+    <div class="row">
+        
+            <div class="col" style="margin-top:70px">
+                <form asp-controller="BookList" asp-action="AddBook" autocomplete="off">
+                    <h5>Dodaj książkę</h5>
+
+                    <p>
+                        Tytuł  <input type="text" name="titlebook" />
+                    </p>
+                    <p>
+                        Autor <input type="text" name="authorbook" />
+                    </p>
+                    <p>
+                        <input type="submit" value="Wprowadź" />
+                    </p>
+                </form>
+            </div>
+            <div class="col" style="margin-top:70px">
+                <form asp-controller="BookList" asp-action="RentBook" autocomplete="off">
+                    <h5>Wypożycz książkę</h5>
+
+                    <p>
+                        Nr katalogowy  <input type="text" name="idofbook" />
+                    </p>
+                    <p>
+                        Nr czytelnika <input type="text" name="idofreader" />
+                    </p>
+                    <p>
+                        <input type="submit" value="Wprowadź" />
+                    </p>
+                </form>
+            </div>
+    </div>
+</div>
