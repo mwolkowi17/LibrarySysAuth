@@ -89,6 +89,8 @@ namespace LibrarySysAuth.Controllers
                              select n).FirstOrDefault();
             newbook.RentedbyReader = newreader.ReaderID;
             newbook.Rented = true;
+            newbook.RentData = DateTime.Today;
+            newbook.DropOfData = DateTime.Today.AddDays(14);
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
@@ -104,6 +106,7 @@ namespace LibrarySysAuth.Controllers
 
             newbook.RentedbyReader = 0;
             newbook.Rented = false;
+           
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));

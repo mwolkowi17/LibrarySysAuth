@@ -85,6 +85,7 @@ namespace LibrarySysAuth.Controllers
 
             ViewBag.Nameuser = newuser.Name;
             ViewBag.Surnameuser = newuser.Surname;
+            ViewBag.ReturnDate = bookoflist.FirstOrDefault().RentData.AddDays(14);
             return View(bookVM);
         }
     }
