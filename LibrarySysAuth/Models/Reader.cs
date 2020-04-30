@@ -23,6 +23,7 @@ namespace LibrarySysAuth.Models
         {
             Name = name;
             Surname = surname;
+            Alias = name + " " + surname;
         }
         public int ReaderID { get; set; }
         public string Name { get; set; }

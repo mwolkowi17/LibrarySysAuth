@@ -17,6 +17,7 @@ namespace LibrarySysAuth.Models
         public DateTime RentData { get; set; }
         [DataType(DataType.Date)]
         public DateTime DropOfData { get; set; }
+        public string AliasofReader { get; set; }
 
         public BookC(string title, string author)
         {

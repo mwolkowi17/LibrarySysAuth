@@ -91,6 +91,7 @@ namespace LibrarySysAuth.Controllers
             newbook.Rented = true;
             newbook.RentData = DateTime.Today;
             newbook.DropOfData = DateTime.Today.AddDays(14);
+            newbook.AliasofReader = newreader.Alias;
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
