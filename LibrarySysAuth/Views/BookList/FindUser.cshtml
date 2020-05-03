@@ -1,40 +1,40 @@
 ﻿@model LibrarySysAuth.Models.LibraryViewModel
-   
+
 
 
 @{
     ViewData["Title"] = "Index";
 }
 
-    <h1>Books</h1>
+<h1>Books</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Nr kat
-                    <!-- @Html.DisplayNameFor(model => model.BookCs[0].BookCID)-->
-                </th>
-                <th>
-                    Tytuł
-                    <!-- @Html.DisplayNameFor(model => model.BookCs[0].TitleC)-->
-                </th>
-                <th>
-                    Autor
-                    <!-- @Html.DisplayNameFor(model => model.BookCs[0].AuthorC)-->
-                </th>
-                <th>
-                    Status wypożyczenia
-                </th>
-                <th>
-                    Wypożyczający
-                </th>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nr kat
+                <!-- @Html.DisplayNameFor(model => model.BookCs[0].BookCID)-->
+            </th>
+            <th>
+                Tytuł
+                <!-- @Html.DisplayNameFor(model => model.BookCs[0].TitleC)-->
+            </th>
+            <th>
+                Autor
+                <!-- @Html.DisplayNameFor(model => model.BookCs[0].AuthorC)-->
+            </th>
+            <th>
+                Status wypożyczenia
+            </th>
+            <th>
+                Wypożyczający
+            </th>
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.BookCs)
-            {
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BookCs)
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.BookCID)
@@ -58,11 +58,18 @@
                     <a asp-action="Delete" asp-route-id="@item.BookCID">Usuń</a>
                 </td>
             </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 <hr />
+
 <div class="container">
+
+    <div class="row">
+        <div class="col">
+            <p> Użytkownik @ViewBag.UserDisplayAlias  Nr rej: <b>@ViewBag.UserDisplayNumber</b> </p>
+        </div>
+    </div>
     <div class="row">
 
         <div class="col" style="margin-top:70px">
@@ -87,7 +94,7 @@
                 <p>
                     Imię lub nazwisko  <input type="text" name="userdata" />
                 </p>
-                
+
                 <p>
                     <input type="submit" value="Wprowadź" />
                 </p>
@@ -110,3 +117,4 @@
         </div>
     </div>
 </div>
+

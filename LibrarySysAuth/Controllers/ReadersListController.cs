@@ -36,16 +36,19 @@ namespace LibrarySysAuth.Controllers
 
         public IActionResult AddUser(string nameuser, string surnameuser)
         {
-            Reader nowy = new Reader(nameuser, surnameuser);
-            _context.Reader.Add(nowy);
-            _context.SaveChanges();
+            if (nameuser != null && surnameuser != null)
+            {
+                Reader nowy = new Reader(nameuser, surnameuser);
+                _context.Reader.Add(nowy);
+                _context.SaveChanges();
+            }
             var readeroflist = from m in _context.Reader
                                select m;
             var readerVM = new LibraryViewModel
             {
                 Readers = readeroflist.ToList()
             };
-            return View(readerVM);
+            return RedirectToAction(nameof(Index));
         }
 
         //GET: /delete user/
@@ -82,10 +85,17 @@ namespace LibrarySysAuth.Controllers
             {
                 BookCs = bookoflist.ToList()
             };
-
+            if(bookoflist.ToList().Count!=0){
             ViewBag.Nameuser = newuser.Name;
             ViewBag.Surnameuser = newuser.Surname;
             ViewBag.ReturnDate = bookoflist.FirstOrDefault().RentData.AddDays(14);
+            }
+            else
+            {
+                ViewBag.Nameuser = newuser.Name;
+                ViewBag.Surnameuser = newuser.Surname;
+                ViewBag.ReturnDate = " ";
+            }
             return View(bookVM);
         }
     }

@@ -36,10 +36,11 @@ namespace LibrarySysAuth.Controllers
 
         public IActionResult AddBook(string titlebook, string authorbook)
         {
+            if (titlebook!=null && authorbook!= null) { 
             BookC nowa = new BookC(titlebook, authorbook);
             _context.BookC.Add(nowa);
             _context.SaveChanges();
-
+            }
             var bookoflist = from m in _context.BookC
                              select m;
             var bookVM = new LibraryViewModel
@@ -87,6 +88,7 @@ namespace LibrarySysAuth.Controllers
             var newreader = (from Reader n in _context.Reader
                              where n.ReaderID == idofreader
                              select n).FirstOrDefault();
+            if (newreader != null) { 
             newbook.RentedbyReader = newreader.ReaderID;
             newbook.Rented = true;
             newbook.RentData = DateTime.Today;
@@ -95,6 +97,11 @@ namespace LibrarySysAuth.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         //GET: /Drop off/
@@ -107,6 +114,7 @@ namespace LibrarySysAuth.Controllers
 
             newbook.RentedbyReader = 0;
             newbook.Rented = false;
+            newbook.AliasofReader = null;
            
             _context.SaveChanges();
 
@@ -150,6 +158,33 @@ namespace LibrarySysAuth.Controllers
                 return View(bookVM);
             }
             
+        }
+
+        //GET: /Find User/
+        public IActionResult FindUser (string userdata)
+        {
+            Reader userfind = (from Reader item in _context.Reader
+                               where item.Alias == userdata
+                               select item).FirstOrDefault();
+            if(userfind != null) 
+            { 
+            ViewBag.UserDisplayAlias = userfind.Alias;
+            ViewBag.UserDisplayNumber = userfind.ReaderID;
+            }
+            else
+            {
+                ViewBag.UserDisplayAlias = "Nie znaleziono czytelnika";
+                ViewBag.UserDisplayNumber = "0";
+            }
+
+
+            var bookoflist = from m in _context.BookC
+                             select m;
+            var bookVM = new LibraryViewModel
+            {
+                BookCs = bookoflist.ToList()
+            };
+            return View(bookVM);
         }
     }
 }
