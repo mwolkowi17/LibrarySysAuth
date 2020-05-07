@@ -12,22 +12,22 @@
     <thead>
         <tr>
             <th>
-                Nr kat
+                ID number
                 <!-- @Html.DisplayNameFor(model => model.BookCs[0].BookCID)-->
             </th>
             <th>
-                Tytuł
+                Title
                 <!-- @Html.DisplayNameFor(model => model.BookCs[0].TitleC)-->
             </th>
             <th>
-                Autor
+                Author
                 <!-- @Html.DisplayNameFor(model => model.BookCs[0].AuthorC)-->
             </th>
             <th>
-                Status wypożyczenia
+                Rented
             </th>
             <th>
-                Wypożyczający
+                Rented by User
             </th>
 
         </tr>
@@ -52,10 +52,10 @@
                     @Html.DisplayFor(modelItem => item.AliasofReader)
                 </td>
                 <td>
-                    <a asp-action="DropOff" asp-route-id="@item.BookCID">Zwróć</a>
+                    <a asp-action="DropOff" asp-route-id="@item.BookCID">Return book</a>
                 </td>
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.BookCID">Usuń</a>
+                    <a asp-action="Delete" asp-route-id="@item.BookCID">Delete</a>
                 </td>
             </tr>
         }
@@ -67,51 +67,51 @@
 
     <div class="row">
         <div class="col">
-            <p> Użytkownik @ViewBag.UserDisplayAlias  Nr rej: <b>@ViewBag.UserDisplayNumber</b> </p>
+            <p> User: @ViewBag.UserDisplayAlias   ID Number: <b>@ViewBag.UserDisplayNumber </b> </p>
         </div>
     </div>
     <div class="row">
 
         <div class="col" style="margin-top:70px">
             <form asp-controller="BookList" asp-action="AddBook" autocomplete="off">
-                <h5>Dodaj książkę</h5>
+                <h5>Add new book</h5>
 
                 <p>
-                    Tytuł  <input type="text" name="titlebook" />
+                    Title  <input type="text" name="titlebook" />
                 </p>
                 <p>
-                    Autor <input type="text" name="authorbook" />
+                    Author <input type="text" name="authorbook" />
                 </p>
                 <p>
-                    <input type="submit" value="Wprowadź" />
+                    <input type="submit" value="Add" />
                 </p>
             </form>
         </div>
         <div class="col" style="margin-top:70px">
             <form asp-controller="BookList" asp-action="FindUser" autocomplete="off">
-                <h5>Wyszukaj nr czytelnika</h5>
+                <h5>Find Reader ID</h5>
 
                 <p>
-                    Imię lub nazwisko  <input type="text" name="userdata" />
+                    Name and Surname <input type="text" name="userdata" />
                 </p>
 
                 <p>
-                    <input type="submit" value="Wprowadź" />
+                    <input type="submit" value="Find" />
                 </p>
             </form>
         </div>
         <div class="col" style="margin-top:70px">
             <form asp-controller="BookList" asp-action="RentBook" autocomplete="off">
-                <h5>Wypożycz książkę</h5>
+                <h5>Rent book</h5>
 
                 <p>
-                    Nr katalogowy  <input type="text" name="idofbook" />
+                    Book ID  <input type="text" name="idofbook" />
                 </p>
                 <p>
-                    Nr czytelnika <input type="text" name="idofreader" />
+                    Reader ID <input type="text" name="idofreader" />
                 </p>
                 <p>
-                    <input type="submit" value="Wprowadź" />
+                    <input type="submit" value="Rent" />
                 </p>
             </form>
         </div>

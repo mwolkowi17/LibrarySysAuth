@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibrarySysAuth.Data;
 using LibrarySysAuth.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace LibrarySysAuth.Controllers
 {
+    
     public class BookListController : Controller
     {
 
@@ -20,6 +22,7 @@ namespace LibrarySysAuth.Controllers
             _context = context;
         }
         // GET: /<controller>/
+        [Authorize]
         public IActionResult Index()
         {
             
@@ -33,7 +36,7 @@ namespace LibrarySysAuth.Controllers
         }
 
         // GET: /new book/
-
+        [Authorize]
         public IActionResult AddBook(string titlebook, string authorbook)
         {
             if (titlebook!=null && authorbook!= null) { 
@@ -58,7 +61,7 @@ namespace LibrarySysAuth.Controllers
         }
 
         // GET: /delete book/
-
+        [Authorize]
         public IActionResult Delete (int id)
         {
             var newbook = (from BookC item in _context.BookC
@@ -79,7 +82,7 @@ namespace LibrarySysAuth.Controllers
         }
 
         //GET: /Rent book/
-
+        [Authorize]
         public IActionResult RentBook (int idofbook, int idofreader)
         {
             var newbook = (from BookC item in _context.BookC
@@ -105,7 +108,7 @@ namespace LibrarySysAuth.Controllers
         }
 
         //GET: /Drop off/
-
+        [Authorize]
         public IActionResult DropOff (int id)
         {
             var newbook = (from BookC item in _context.BookC
@@ -161,6 +164,7 @@ namespace LibrarySysAuth.Controllers
         }
 
         //GET: /Find User/
+        [Authorize]
         public IActionResult FindUser (string userdata)
         {
             Reader userfind = (from Reader item in _context.Reader
@@ -171,12 +175,14 @@ namespace LibrarySysAuth.Controllers
             ViewBag.UserDisplayAlias = userfind.Alias;
             ViewBag.UserDisplayNumber = userfind.ReaderID;
             }
+            
+            
             else
             {
                 ViewBag.UserDisplayAlias = "Nie znaleziono czytelnika";
                 ViewBag.UserDisplayNumber = "0";
             }
-
+            //ulepszyć wyszukiwanie czytelnika
 
             var bookoflist = from m in _context.BookC
                              select m;

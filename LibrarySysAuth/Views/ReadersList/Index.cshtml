@@ -37,10 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Surname)
             </td>
             <td>
-                <a asp-action="Select" asp-route-id="@item.ReaderID">Wyświetl wypożyczone</a>
+                <a asp-action="Select" asp-route-id="@item.ReaderID">Display Rented</a>
             </td>
             <td>
-                <a asp-action="Delete" asp-route-id="@item.ReaderID">Usuń</a>
+                <a asp-action="Delete" asp-route-id="@item.ReaderID">Delete</a>
             </td>
 
         </tr>
@@ -50,16 +50,16 @@
 <hr />
 <div class="Addbook" style="margin-top:70px">
     <form asp-controller="ReadersList" asp-action="AddUser" autocomplete="off">
-        <h5>Dodaj czytelnika</h5>
+        <h5>Add User</h5>
 
         <p>
-            Imię  <input type="text" name="nameuser" />
+            Name  <input type="text" name="nameuser" />
         </p>
         <p>
-            Nazwisko <input type="text" name="surnameuser" />
+            Surname <input type="text" name="surnameuser" />
         </p>
         <p>
-            <input type="submit" value="Wprowadź" />
+            <input type="submit" value="Add" />
         </p>
     </form>
 </div>

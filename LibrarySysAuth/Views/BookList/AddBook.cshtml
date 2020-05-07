@@ -12,22 +12,22 @@
     <thead>
         <tr>
             <th>
-                Nr kat
+                ID number
                 <!-- @Html.DisplayNameFor(model => model.BookCs[0].BookCID)-->
             </th>
             <th>
-                Tytuł
+                Title
                 <!-- @Html.DisplayNameFor(model => model.BookCs[0].TitleC)-->
             </th>
             <th>
-                Autor
+                Author
                 <!-- @Html.DisplayNameFor(model => model.BookCs[0].AuthorC)-->
             </th>
             <th>
-                Status wypożyczenia
+                Rented
             </th>
             <th>
-                Wypożyczający
+                Rented by User
             </th>
 
         </tr>
@@ -52,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.RentedbyReader)
             </td>
             <td>
-                <a asp-action="Delete" asp-route-id="@item.BookCID">Usuń</a>
+                <a asp-action="Delete" asp-route-id="@item.BookCID">Delete</a>
             </td>
 
         </tr>
@@ -62,16 +62,16 @@
 <hr />
 <div class="Addbook" style="margin-top:70px">
     <form asp-controller="BookList" asp-action="AddBook" autocomplete="off">
-        <h5>Dodaj książkę</h5>
+        <h5>Add new book</h5>
        
         <p>
-            Tytuł  <input type="text" name="titlebook" />
+            Title  <input type="text" name="titlebook" />
         </p>
         <p>
-            Autor <input type="text" name="authorbook" />
+            Author <input type="text" name="authorbook" />
         </p>
         <p>
-            <input type="submit" value="Wprowadź" />
+            <input type="submit" value="Add" />
         </p>
     </form>
 </div>

@@ -12,22 +12,22 @@
     <thead>
         <tr>
             <th>
-                Nr kat
+                ID number
                 <!-- @Html.DisplayNameFor(model => model.BookCs[0].BookCID)-->
             </th>
             <th>
-                Tytuł
+                Title
                 <!-- @Html.DisplayNameFor(model => model.BookCs[0].TitleC)-->
             </th>
             <th>
-                Autor
+                Author
                 <!-- @Html.DisplayNameFor(model => model.BookCs[0].AuthorC)-->
             </th>
             <th>
-                Status wypożyczenia
+                Rented
             </th>
             <th>
-                Wypożyczający
+                Rented by User
             </th>
 
         </tr>
@@ -52,10 +52,10 @@
                     @Html.DisplayFor(modelItem => item.RentedbyReader)
                 </td>
                 <td>
-                    <a asp-action="DropOff" asp-route-id="@item.BookCID">Zwróć</a>
+                    <a asp-action="DropOff" asp-route-id="@item.BookCID">Return book</a>
                 </td>
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.BookCID">Usuń</a>
+                    <a asp-action="Delete" asp-route-id="@item.BookCID">Delete</a>
                 </td>
             </tr>
         }

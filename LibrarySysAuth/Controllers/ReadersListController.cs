@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LibrarySysAuth.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ReadersListController : Controller
     {
         private readonly ApplicationDbContext _context;
