@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace LibrarySysAuth.Controllers
 {
-    
+
     public class BookListController : Controller
     {
 
@@ -25,7 +25,7 @@ namespace LibrarySysAuth.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            
+
             var bookoflist = from m in _context.BookC
                              select m;
             var bookVM = new LibraryViewModel
@@ -39,10 +39,11 @@ namespace LibrarySysAuth.Controllers
         [Authorize]
         public IActionResult AddBook(string titlebook, string authorbook)
         {
-            if (titlebook!=null && authorbook!= null) { 
-            BookC nowa = new BookC(titlebook, authorbook);
-            _context.BookC.Add(nowa);
-            _context.SaveChanges();
+            if (titlebook != null && authorbook != null)
+            {
+                BookC nowa = new BookC(titlebook, authorbook);
+                _context.BookC.Add(nowa);
+                _context.SaveChanges();
             }
             var bookoflist = from m in _context.BookC
                              select m;
@@ -56,17 +57,17 @@ namespace LibrarySysAuth.Controllers
 
 
             return RedirectToAction(nameof(Index));
-            
+
 
         }
 
         // GET: /delete book/
         [Authorize]
-        public IActionResult Delete (int id)
+        public IActionResult Delete(int id)
         {
             var newbook = (from BookC item in _context.BookC
-                             where item.BookCID == id
-                             select item).FirstOrDefault();
+                           where item.BookCID == id
+                           select item).FirstOrDefault();
             _context.BookC.Remove(newbook);
             _context.SaveChanges();
 
@@ -83,7 +84,7 @@ namespace LibrarySysAuth.Controllers
 
         //GET: /Rent book/
         [Authorize]
-        public IActionResult RentBook (int idofbook, int idofreader)
+        public IActionResult RentBook(int idofbook, int idofreader)
         {
             var newbook = (from BookC item in _context.BookC
                            where item.BookCID == idofbook
@@ -91,15 +92,16 @@ namespace LibrarySysAuth.Controllers
             var newreader = (from Reader n in _context.Reader
                              where n.ReaderID == idofreader
                              select n).FirstOrDefault();
-            if (newreader != null) { 
-            newbook.RentedbyReader = newreader.ReaderID;
-            newbook.Rented = true;
-            newbook.RentData = DateTime.Today;
-            newbook.DropOfData = DateTime.Today.AddDays(14);
-            newbook.AliasofReader = newreader.Alias;
-            _context.SaveChanges();
+            if (newreader != null)
+            {
+                newbook.RentedbyReader = newreader.ReaderID;
+                newbook.Rented = true;
+                newbook.RentData = DateTime.Today;
+                newbook.DropOfData = DateTime.Today.AddDays(14);
+                newbook.AliasofReader = newreader.Alias;
+                _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             else
             {
@@ -109,7 +111,7 @@ namespace LibrarySysAuth.Controllers
 
         //GET: /Drop off/
         [Authorize]
-        public IActionResult DropOff (int id)
+        public IActionResult DropOff(int id)
         {
             var newbook = (from BookC item in _context.BookC
                            where item.BookCID == id
@@ -118,7 +120,7 @@ namespace LibrarySysAuth.Controllers
             newbook.RentedbyReader = 0;
             newbook.Rented = false;
             newbook.AliasofReader = null;
-           
+
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
@@ -126,16 +128,17 @@ namespace LibrarySysAuth.Controllers
 
         //GET: /Find book/
 
-        public IActionResult FindBook (string titlebook)
+        public IActionResult FindBook(string titlebook)
         {
             var bookoflist = from BookC item in _context.BookC
-                          where item.TitleC == titlebook
-                          select item;
-            if (bookoflist.ToList().Count != 0) { 
-            var bookVM = new LibraryViewModel
+                             where item.TitleC == titlebook
+                             select item;
+            if (bookoflist.ToList().Count != 0)
             {
-                BookCs = bookoflist.ToList()
-            };
+                var bookVM = new LibraryViewModel
+                {
+                    BookCs = bookoflist.ToList()
+                };
                 return View(bookVM);
             }
 
@@ -160,37 +163,74 @@ namespace LibrarySysAuth.Controllers
                 };
                 return View(bookVM);
             }
-            
+
         }
 
         //GET: /Find User/
         [Authorize]
-        public IActionResult FindUser (string userdata)
+        public IActionResult FindUser(string userdata)
         {
-            Reader userfind = (from Reader item in _context.Reader
+
+            /*Reader userfind = (from Reader item in _context.Reader
                                where item.Alias == userdata
                                select item).FirstOrDefault();
             if(userfind != null) 
             { 
             ViewBag.UserDisplayAlias = userfind.Alias;
             ViewBag.UserDisplayNumber = userfind.ReaderID;
-            }
-            
-            
+            }            
             else
             {
                 ViewBag.UserDisplayAlias = "Nie znaleziono czytelnika";
                 ViewBag.UserDisplayNumber = "0";
-            }
+            }*/
             //ulepszyć wyszukiwanie czytelnika
+            var userfindlistA = from Reader item in _context.Reader
+                                where item.Surname == userdata
+                                select item;
 
-            var bookoflist = from m in _context.BookC
-                             select m;
-            var bookVM = new LibraryViewModel
+            var userfindlistB = from Reader n in _context.Reader
+                                 where n.Name == userdata
+                                 select n;
+            if (userfindlistA.Count() != 0)
             {
-                BookCs = bookoflist.ToList()
-            };
-            return View(bookVM);
+
+                var bookoflist = from m in _context.BookC
+                                 select m;
+                var bookVM = new LibraryViewModel
+                {
+                    BookCs = bookoflist.ToList(),
+                    Readers = userfindlistA.ToList()
+                };
+                return View(bookVM);
+            }
+            if (userfindlistB.Count() != 0)
+            {
+                var bookoflist = from m in _context.BookC
+                                 select m;
+                var bookVM = new LibraryViewModel
+                {
+                    BookCs = bookoflist.ToList(),
+                    Readers = userfindlistB.ToList()
+                };
+                return View(bookVM);
+            }
+            else
+            {
+                var bookoflist = from m in _context.BookC
+                                 select m;
+                var bookVM = new LibraryViewModel
+                {
+
+                    BookCs = bookoflist.ToList(),
+                    Readers= userfindlistA.ToList()
+                    
+                };
+                ViewBag.UserDisplayAlias = "Nie znaleziono czytelnika";
+                ViewBag.UserDisplayNumber = "0";
+                return View(bookVM);
+            }
         }
     }
+
 }

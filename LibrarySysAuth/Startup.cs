@@ -32,8 +32,8 @@ namespace LibrarySysAuth
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => 
             {
-                //options.SignIn.RequireConfirmedAccount = true;
-                //options.Lockout.AllowedForNewUsers = true;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Lockout.AllowedForNewUsers = true;
 
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
