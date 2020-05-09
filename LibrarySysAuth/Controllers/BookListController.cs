@@ -192,6 +192,9 @@ namespace LibrarySysAuth.Controllers
             var userfindlistB = from Reader n in _context.Reader
                                  where n.Name == userdata
                                  select n;
+            var userfindlistC = from Reader m in _context.Reader
+                                where m.Alias == userdata
+                                select m;
             if (userfindlistA.Count() != 0)
             {
 
@@ -215,6 +218,17 @@ namespace LibrarySysAuth.Controllers
                 };
                 return View(bookVM);
             }
+            if(userfindlistC.Count() != 0)
+            {
+                var bookoflist = from m in _context.BookC
+                                 select m;
+                var bookVM = new LibraryViewModel
+                {
+                    BookCs = bookoflist.ToList(),
+                    Readers = userfindlistB.ToList()
+                };
+                return View(bookVM);
+            }
             else
             {
                 var bookoflist = from m in _context.BookC
@@ -226,7 +240,7 @@ namespace LibrarySysAuth.Controllers
                     Readers= userfindlistA.ToList()
                     
                 };
-                ViewBag.UserDisplayAlias = "Nie znaleziono czytelnika";
+                ViewBag.UserDisplayAlias = "No User finded.";
                 ViewBag.UserDisplayNumber = "0";
                 return View(bookVM);
             }
