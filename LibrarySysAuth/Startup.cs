@@ -12,6 +12,8 @@ using LibrarySysAuth.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace LibrarySysAuth
 {
@@ -30,17 +32,40 @@ namespace LibrarySysAuth
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => 
+            /*services.AddDefaultIdentity<IdentityUser>(options => 
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Lockout.AllowedForNewUsers = true;
 
-            })
+            })*/
+            services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+        .AddRazorPagesOptions(options =>
+        {
+            
+            options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+            options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+        });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
-
+        public class EmailSender : IEmailSender
+        {
+            public Task SendEmailAsync(string email, string subject, string message)
+            {
+                return Task.CompletedTask;
+            }
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

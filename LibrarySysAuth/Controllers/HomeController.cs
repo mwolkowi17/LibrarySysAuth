@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using LibrarySysAuth.Models;
 using LibrarySysAuth.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibrarySysAuth.Controllers
 {
@@ -27,7 +28,7 @@ namespace LibrarySysAuth.Controllers
 
 
 
-
+       
         public IActionResult Index()
         {
             return View();
