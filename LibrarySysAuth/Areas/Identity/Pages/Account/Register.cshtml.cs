@@ -62,18 +62,18 @@ namespace LibrarySysAuth.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-        /*public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        }*/
-
-        public IActionResult OnGet()
-        {
-            return RedirectToPage("Login");
         }
 
-        /*public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        /*public IActionResult OnGet()
+        {
+            return RedirectToPage("Login");
+        }*/
+
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -114,7 +114,7 @@ namespace LibrarySysAuth.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
-        }*/
+        }
         public IActionResult OnPost()
         {
             return RedirectToPage("Login");
